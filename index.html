@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 إمبراطورية التجارة العالمية - Global Trade Empire</title>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #7c3aed;
+            --success: #059669;
+            --warning: #d97706;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: #f1f5f9;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+        
+        .profit-badge {
+            background: linear-gradient(90deg, var(--success), #10b981);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        
+        .robot-active {
+            box-shadow: 0 0 20px rgba(5, 150, 105, 0.3);
+        }
+    </style>
+</head>
+<body class="font-sans">
+    
+    <!-- Firebase Configuration -->
+    <script>
+        // 🔥 Firebase Configuration - سأضيفها لاحقاً
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY_HERE",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        
+        // Initialize Firebase (إذا كان config موجوداً)
+        if (firebaseConfig.apiKey !== "YOUR_API_KEY_HERE") {
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+            const auth = firebase.auth();
+        }
+    </script>
+
+    <!-- Navigation -->
+    <nav class="glass-card fixed top-0 left-0 right-0 z-50 p-4 mx-4 mt-2">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="text-3xl">🚀</div>
+                <div>
+                    <h1 class="text-xl font-bold">إمبراطورية التجارة العالمية</h1>
+                    <p class="text-sm text-gray-400">نظام ذكي متكامل 24/7</p>
+                </div>
+            </div>
+            
+            <div class="flex space-x-2 space-x-reverse">
+                <button onclick="changeLanguage('ar')" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition">العربية</button>
+                <button onclick="changeLanguage('en')" class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition">English</button>
+                <button onclick="showWallet()" class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 transition">💰 المحفظة</button>
+                <button onclick="startAllBots()" class="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 transition">▶️ تشغيل الكل</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard -->
+    <div class="container mx-auto px-4 pt-24 pb-8">
+        
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Total Profit -->
+            <div class="glass-card p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-400">إجمالي الأرباح</p>
+                        <p id="total-profit" class="text-3xl font-bold mt-2">$18,542</p>
+                    </div>
+                    <div class="text-2xl">💰</div>
+                </div>
+                <div class="mt-4 text-green-400 flex items-center">
+                    <span>📈 +4.2%</span>
+                    <span class="mr-2">هذا اليوم</span>
+                </div>
+            </div>
+            
+            <!-- Active Bots -->
+            <div class="glass-card p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-400">الروبوتات النشطة</p>
+                        <p id="active-bots" class="text-3xl font-bold mt-2">12/12</p>
+                    </div>
+                    <div class="text-2xl">🤖</div>
+                </div>
+                <div class="mt-4 text-blue-400">⚡ جميع الأنظمة تعمل</div>
+            </div>
+            
+            <!-- Success Rate -->
+            <div class="glass-card p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-400">معدل النجاح</p>
+                        <p id="success-rate" class="text-3xl font-bold mt-2">96.7%</p>
+                    </div>
+                    <div class="text-2xl">🎯</div>
+                </div>
+                <div class="mt-4 text-yellow-400">⭐ أداء استثنائي</div>
+            </div>
+            
+            <!-- Daily Profit -->
+            <div class="glass-card p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-400">أرباح اليوم</p>
+                        <p id="daily-profit" class="text-3xl font-bold mt-2">$847</p>
+                    </div>
+                    <div class="text-2xl">💹</div>
+                </div>
+                <div class="mt-4 text-green-400">🔥 +$347 خلال ساعة</div>
+            </div>
+        </div>
+        
+        <!-- Advanced Trading Bots -->
+        <div class="glass-card p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">🤖 الروبوتات المتقدمة</h2>
+                <button onclick="toggleAllBots()" class="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600">تشغيل/إيقاف الكل</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <!-- Trading Bot -->
+                <div id="bot-trading" class="glass-card p-4 robot-active">
+                    <div class="flex items-center mb-3">
+                        <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center text-xl">📈</div>
+                        <div class="mr-3">
+                            <h3 class="font-bold">روبوت التداول الذكي</h3>
+                            <p class="text-sm text-gray-400">تداول الذهب والعملات</p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span>الأرباح اليومية</span>
+                            <span class="text-green-400">+$324</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-400">🟢 نشط</span>
+                        <button onclick="toggleBot('trading')" class="text-sm bg-red-500 hover:bg-red-600 px-3 py-1 rounded">إيقاف</button>
+                    </div>
+                </div>
+                
+                <!-- E-commerce Bot -->
+                <div id="bot-ecommerce" class="glass-card p-4 robot-active">
+                    <div class="flex items-center mb-3">
+                        <div class="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center text-xl">🛒</div>
+                        <div class="mr-3">
+                            <h3 class="font-bold">روبوت التجارة الإلكترونية</h3>
+                            <p class="text-sm text-gray-400">شراء من الصين بيع عالمي</p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span>الأرباح اليومية</span>
+                            <span class="text-green-400">+$187</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 65%"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-400">🟢 نشط</span>
+                        <button onclick="toggleBot('ecommerce')" class="text-sm bg-red-500 hover:bg-red-600 px-3 py-1 rounded">إيقاف</button>
+                    </div>
+                </div>
+                
+                <!-- Affiliate Bot -->
+                <div id="bot-affiliate" class="glass-card p-4 robot-active">
+                    <div class="flex items-center mb-3">
+                        <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center text-xl">👥</div>
+                        <div class="mr-3">
+                            <h3 class="font-bold">روبوت التسويق بالعمولة</h3>
+                            <p class="text-sm text-gray-400">عمولات من شركاء عالميين</p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span>الأرباح اليومية</span>
+                            <span class="text-green-400">+$89</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 45%"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-400">🟢 نشط</span>
+                        <button onclick="toggleBot('affiliate')" class="text-sm bg-red-500 hover:bg-red-600 px-3 py-1 rounded">إيقاف</button>
+                    </div>
+                </div>
+                
+                <!-- Crypto Bot -->
+                <div id="bot-crypto" class="glass-card p-4 robot-active">
+                    <div class="flex items-center mb-3">
+                        <div class="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center text-xl">₿</div>
+                        <div class="mr-3">
+                            <h3 class="font-bold">روبوت العملات الرقمية</h3>
+                            <p class="text-sm text-gray-400">تداول البيتكوين والإيثريوم</p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span>الأرباح اليومية</span>
+                            <span class="text-green-400">+$156</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 55%"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-400">🟢 نشط</span>
+                        <button onclick="toggleBot('crypto')" class="text-sm bg-red-500 hover:bg-red-600 px-3 py-1 rounded">إيقاف</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Income Sources & Wallet -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Income Sources -->
+            <div class="glass-card p-6 lg:col-span-2">
+                <h2 class="text-2xl font-bold mb-6">💰 مصادر الدخل المتعددة</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-800/50">
+                            <tr>
+                                <th class="p-3 text-right">المصدر</th>
+                                <th class="p-3 text-right">الإيرادات</th>
+                                <th class="p-3 text-right">النمو</th>
+                                <th class="p-3 text-right">الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-700/50">
+                                <td class="p-3">📈 تداول الذهب والعملات</td>
+                                <td class="p-3 font-bold">$5,847</td>
+                                <td class="p-3 text-green-400">+12.5%</td>
+                                <td class="p-3"><span class="bg-green-900/50 text-green-300 px-2 py-1 rounded text-sm">ممتاز</span></td>
+                            </tr>
+                            <tr class="border-b border-gray-700/50">
+                                <td class="p-3">🛒 متجر إلكتروني آلي</td>
+                                <td class="p-3 font-bold">$3,591</td>
+                                <td class="p-3 text-green-400">+8.3%</td>
+                                <td class="p-3"><span class="bg-green-900/50 text-green-300 px-2 py-1 rounded text-sm">جيد</span></td>
+                            </tr>
+                            <tr class="border-b border-gray-700/50">
+                                <td class="p-3">🤝 وساطة تجارية</td>
+                                <td class="p-3 font-bold">$2,874</td>
+                                <td class="p-3 text-green-400">+15.2%</td>
+                                <td class="p-3"><span class="bg-green-900/50 text-green-300 px-2 py-1 rounded text-sm">ممتاز</span></td>
+                            </tr>
+                            <tr class="border-b border-gray-700/50">
+                                <td class="p-3">🌐 تسويق رقمي</td>
+                                <td class="p-3 font-bold">$1,845</td>
+                                <td class="p-3 text-green-400">+5.7%</td>
+                                <td class="p-3"><span class="bg-yellow-900/50 text-yellow-300 px-2 py-1 rounded text-sm">متوسط</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3">💼 استثمارات ذكية</td>
+                                <td class="p-3 font-bold">$4,385</td>
+                                <td class="p-3 text-green-400">+9.8%</td>
+                                <td class="p-3"><span class="bg-green-900/50 text-green-300 px-2 py-1 rounded text-sm">ممتاز</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Digital Wallet -->
+            <div class="glass-card p-6">
+                <h2 class="text-2xl font-bold mb-6">💼 المحفظة الرقمية</h2>
+                
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-4 bg-gray-800/30 rounded-lg">
+                        <span>الرصيد الكلي</span>
+                        <span id="wallet-balance" class="text-2xl font-bold">$12,542</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-3 bg-gray-800/30 rounded-lg text-center">
+                            <div class="text-sm text-gray-400">متاح للسحب</div>
+                            <div class="text-xl font-bold">$8,152</div>
+                        </div>
+                        <div class="p-3 bg-gray-800/30 rounded-lg text-center">
+                            <div class="text-sm text-gray-400">مستثمر</div>
+                            <div class="text-xl font-bold">$4,390</div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <button onclick="withdrawMoney()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-bold transition">
+                            🏦 سحب الأرباح
+                        </button>
+                        <button onclick="reinvestMoney()" class="w-full bg-green-600 hover:bg-green-700 py-3 rounded-lg font-bold transition">
+                            🔄 إعادة استثمار
+                        </button>
+                        <button onclick="showTransactions()" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg font-bold transition">
+                            📋 عرض المعاملات
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Real-time Transactions -->
+        <div class="glass-card p-6">
+            <h2 class="text-2xl font-bold mb-6">⚡ المعاملات الحية</h2>
+            
+            <div id="live-transactions" class="space-y-3 max-h-96 overflow-y-auto">
+                <!-- Transactions will be added here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass-card mx-4 mb-4 p-6 text-center text-gray-400">
+        <p class="text-lg">🚀 إمبراطورية التجارة العالمية - نظام ذكي متكامل</p>
+        <p class="mt-2">⚡ يعمل على GitHub + Netlify + Firebase</p>
+        <p class="mt-4 text-sm">🇨🇳 🤝 🇮🇶 من الصين إلى العراق بأعلى درجات الكفاءة</p>
+        <p class="mt-2 text-sm">© 2024 - جميع الأنظمة تعمل تلقائياً 24/7</p>
+    </footer>
+
+    <!-- JavaScript Application -->
+    <script>
+        // Global Trade Empire System
+        class GlobalTradeEmpire {
+            constructor() {
+                this.totalProfit = 18542;
+                this.dailyProfit = 847;
+                this.activeBots = 12;
+                this.successRate = 96.7;
+                this.walletBalance = 12542;
+                this.language = 'ar';
+                this.bots = {};
+                
+                this.init();
+            }
+            
+            init() {
+                console.log('🚀 إمبراطورية التجارة العالمية تعمل الآن!');
+                
+                // Initialize all bots
+                this.initializeBots();
+                
+                // Start auto profit updates
+                this.startAutoTrading();
+                
+                // Generate initial transactions
+                this.generateTransactions();
+                
+                // Initialize Firebase if available
+                this.initFirebase();
+            }
+            
+            initializeBots() {
+                this.bots = {
+                    trading: { active: true, profit: 324, type: 'تداول' },
+                    ecommerce: { active: true, profit: 187, type: 'تجارة' },
+                    affiliate: { active: true, profit: 89, type: 'تسويق' },
+                    crypto: { active: true, profit: 156, type: 'عملات' },
+                    realestate: { active: true, profit: 120, type: 'عقارات' },
+                    data: { active: true, profit: 75, type: 'بيانات' },
+                    digital: { active: true, profit: 95, type: 'خدمات' },
+                    stocks: { active: true, profit: 210, type: 'أسهم' },
+                    rental: { active: true, profit: 65, type: 'تأجير' },
+                    broker: { active: true, profit: 180, type: 'وساطة' },
+                    analyst: { active: true, profit: 0, type: 'تحليل' },
+                    security: { active: true, profit: 0, type: 'أمان' }
+                };
+            }
+            
+            startAutoTrading() {
+                // Auto profit generation every 5 seconds
+                setInterval(() => {
+                    this.generateProfit();
+                    this.updateUI();
+                }, 5000);
+                
+                // Auto transactions every 10 seconds
+                setInterval(() => {
+                    this.addLiveTransaction();
+                }, 10000);
+            }
+            
+            generateProfit() {
+                let newProfit = 0;
+                
+                // Calculate profit from active bots
+                Object.values(this.bots).forEach(bot => {
+                    if (bot.active && bot.profit > 0) {
+                        const randomIncrease = Math.floor(Math.random() * 15) + 5;
+                        newProfit += randomIncrease;
+                        bot.profit += randomIncrease;
+                    }
+                });
+                
+                this.dailyProfit += newProfit;
+                this.totalProfit += newProfit;
+                this.walletBalance += newProfit;
+                
+                return newProfit;
+            }
+            
+            updateUI() {
+                document.getElementById('total-profit').textContent = `$${this.totalProfit.toLocaleString()}`;
+                document.getElementById('daily-profit').textContent = `$${this.dailyProfit.toLocaleString()}`;
+                document.getElementById('wallet-balance').textContent = `$${this.walletBalance.toLocaleString()}`;
+                document.getElementById('active-bots').textContent = `${Object.values(this.bots).filter(b => b.active).length}/12`;
+                document.getElementById('success-rate').textContent = `${this.successRate}%`;
+            }
+            
+            generateTransactions() {
+                const transactionsContainer = document.getElementById('live-transactions');
+                const transactions = [
+                    { type: 'تداول ذهب', amount: 124, time: 'الآن' },
+                    { type: 'بيع منتج', amount: 87, time: 'منذ 5 دقائق' },
+                    { type: 'عمولة وساطة', amount: 245, time: 'منذ 18 دقيقة' },
+                    { type: 'تسويق رقمي', amount: 63, time: 'منذ ساعة' },
+                    { type: 'استثمار عقاري', amount: 180, time: 'منذ ساعتين' }
+                ];
+                
+                transactions.forEach(transaction => {
+                    const div = document.createElement('div');
+                    div.className = 'p-4 bg-gray-800/30 rounded-lg flex justify-between items-center';
+                    div.innerHTML = `
+                        <div>
+                            <div class="font-bold">${transaction.type}</div>
+                            <div class="text-sm text-gray-400">${transaction.time}</div>
+                        </div>
+                        <div class="text-green-400 font-bold text-xl">+$${transaction.amount}</div>
+                    `;
+                    transactionsContainer.appendChild(div);
+                });
+            }
+            
+            addLiveTransaction() {
+                const types = ['تداول آلي', 'عمولة تجارية', 'ربح استثماري', 'بيع منتج', 'خدمة رقمية'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                const amount = Math.floor(Math.random() * 200) + 50;
+                const time = 'الآن';
+                
+                const transactionsContainer = document.getElementById('live-transactions');
+                const div = document.createElement('div');
+                div.className = 'p-4 bg-gray-800/30 rounded-lg flex justify-between items-center';
+                div.innerHTML = `
+                    <div>
+                        <div class="font-bold">${type}</div>
+                        <div class="text-sm text-gray-400">${time}</div>
+                    </div>
+                    <div class="text-green-400 font-bold text-xl">+$${amount}</div>
+                `;
+                
+                // Add to beginning
+                transactionsContainer.insertBefore(div, transactionsContainer.firstChild);
+                
+                // Limit to 10 transactions
+                if (transactionsContainer.children.length > 10) {
+                    transactionsContainer.removeChild(transactionsContainer.lastChild);
+                }
+                
+                // Add to profits
+                this.dailyProfit += amount;
+                this.totalProfit += amount;
+                this.walletBalance += amount;
+                this.updateUI();
+            }
+            
+            toggleBot(botId) {
+                if (this.bots[botId]) {
+                    this.bots[botId].active = !this.bots[botId].active;
+                    const botElement = document.getElementById(`bot-${botId}`);
+                    const button = botElement.querySelector('button');
+                    
+                    if (this.bots[botId].active) {
+                        botElement.classList.add('robot-active');
+                        botElement.querySelector('.text-gray-400').textContent = '🟢 نشط';
+                        button.textContent = 'إيقاف';
+                        button.className = 'text-sm bg-red-500 hover:bg-red-600 px-3 py-1 rounded';
+                    } else {
+                        botElement.classList.remove('robot-active');
+                        botElement.querySelector('.text-gray-400').textContent = '🔴 متوقف';
+                        button.textContent = 'تشغيل';
+                        button.className = 'text-sm bg-green-500 hover:bg-green-600 px-3 py-1 rounded';
+                    }
+                }
+            }
+            
+            toggleAllBots() {
+                const allActive = Object.values(this.bots).every(bot => bot.active);
+                
+                Object.keys(this.bots).forEach(botId => {
+                    this.bots[botId].active = !allActive;
+                    const botElement = document.getElementById(`bot-${botId}`);
+                    const button = botElement?.querySelector('button');
+                    
+                    if (botElement && button) {
+                        if (!allActive) {
+                            botElement.classList.add('robot-active');
+                            botElement.querySelector('.text-gray-400').textContent = '🟢 نشط';
+                            button.textContent = 'إيقاف';
+                            button.className = 'text-sm bg-red-500 hover:bg-red-600 px-3 py-1 rounded';
+                        } else {
+                            botElement.classList.remove('robot-active');
+                            botElement.querySelector('.text-gray-400').textContent = '🔴 متوقف';
+                            button.textContent = 'تشغيل';
+                            button.className = 'text-sm bg-green-500 hover:bg-green-600 px-3 py-1 rounded';
+                        }
+                    }
+                });
+            }
+            
+            withdrawMoney() {
+                const withdrawAmount = 2000;
+                if (this.walletBalance >= withdrawAmount) {
+                    this.walletBalance -= withdrawAmount;
+                    this.updateUI();
+                    
+                    // Add withdrawal transaction
+                    this.addTransaction('سحب أرباح', -withdrawAmount, 'سحب');
+                    
+                    alert(`✅ تم سحب $${withdrawAmount} بنجاح!\nالرصيد الجديد: $${this.walletBalance}`);
+                } else {
+                    alert('⚠️ الرصيد غير كافي للسحب');
+                }
+            }
+            
+            reinvestMoney() {
+                const investAmount = 1000;
+                if (this.walletBalance >= investAmount) {
+                    this.walletBalance -= investAmount;
+                    this.updateUI();
+                    
+                    // Add investment transaction
+                    this.addTransaction('إعادة استثمار', -investAmount, 'استثمار');
+                    
+                    // Increase profit rate
+                    this.successRate = Math.min(99.9, this.successRate + 0.5);
+                    
+                    alert(`✅ تم إعادة استثمار $${investAmount}!\nمعدل النجاح الجديد: ${this.successRate}%`);
+                } else {
+                    alert('⚠️ الرصيد غير كافي للاستثمار');
+                }
+            }
+            
+            addTransaction(type, amount, category) {
+                const transactionsContainer = document.getElementById('live-transactions');
+                const div = document.createElement('div');
+                const isPositive = amount > 0;
+                
+                div.className = 'p-4 bg-gray-800/30 rounded-lg flex justify-between items-center';
+                div.innerHTML = `
+                    <div>
+                        <div class="font-bold">${type}</div>
+                        <div class="text-sm text-gray-400">${category} • الآن</div>
+                    </div>
+                    <div class="${isPositive ? 'text-green-400' : 'text-red-400'} font-bold text-xl">
+                        ${isPositive ? '+' : ''}$${Math.abs(amount)}
+                    </div>
+                `;
+                
+                transactionsContainer.insertBefore(div, transactionsContainer.firstChild);
+                
+                if (transactionsContainer.children.length > 10) {
+                    transactionsContainer.removeChild(transactionsContainer.lastChild);
+                }
+            }
+            
+            initFirebase() {
+                // This would initialize Firebase connection
+                // For now, we'll use localStorage as fallback
+                this.loadFromStorage();
+            }
+            
+            saveToStorage() {
+                const data = {
+                    totalProfit: this.totalProfit,
+                    dailyProfit: this.dailyProfit,
+                    walletBalance: this.walletBalance,
+                    bots: this.bots
+                };
+                localStorage.setItem('globalTradeEmpire', JSON.stringify(data));
+            }
+            
+            loadFromStorage() {
+                const saved = localStorage.getItem('globalTradeEmpire');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    this.totalProfit = data.totalProfit || this.totalProfit;
+                    this.dailyProfit = data.dailyProfit || this.dailyProfit;
+                    this.walletBalance = data.walletBalance || this.walletBalance;
+                    this.bots = data.bots || this.bots;
+                    this.updateUI();
+                }
+            }
+            
+            showWallet() {
+                alert(`💰 محفظتك الرقمية:\n\nالرصيد الكلي: $${this.walletBalance.toLocaleString()}\nمتاح للسحب: $${(this.walletBalance * 0.7).toLocaleString()}\nمستثمر: $${(this.walletBalance * 0.3).toLocaleString()}`);
+            }
+            
+            showTransactions() {
+                const transactions = document.getElementById('live-transactions');
+                alert(`📋 آخر ${transactions.children.length} معاملة:`);
+            }
+        }
+        
+        // Global Functions
+        function changeLanguage(lang) {
+            const empire = window.globalTradeEmpire;
+            empire.language = lang;
+            
+            // Update button styles
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.classList.remove('bg-blue-600');
+                btn.classList.add('bg-gray-700');
+            });
+            
+            event.target.classList.remove('bg-gray-700');
+            event.target.classList.add('bg-blue-600');
+            
+            // In a real app, we would update all text translations here
+            alert(`🌍 تم التغيير إلى ${lang === 'ar' ? 'العربية' : 'الإنجليزية'}`);
+        }
+        
+        function toggleBot(botId) {
+            window.globalTradeEmpire.toggleBot(botId);
+        }
+        
+        function toggleAllBots() {
+            window.globalTradeEmpire.toggleAllBots();
+        }
+        
+        function startAllBots() {
+            window.globalTradeEmpire.toggleAllBots();
+            alert('✅ تم تشغيل جميع الروبوتات الذكية!');
+        }
+        
+        function withdrawMoney() {
+            window.globalTradeEmpire.withdrawMoney();
+        }
+        
+        function reinvestMoney() {
+            window.globalTradeEmpire.reinvestMoney();
+        }
+        
+        function showWallet() {
+            window.globalTradeEmpire.showWallet();
+        }
+        
+        function showTransactions() {
+            window.globalTradeEmpire.showTransactions();
+        }
+        
+        // Initialize Application
+        window.onload = function() {
+            window.globalTradeEmpire = new GlobalTradeEmpire();
+            
+            // Auto-save every 30 seconds
+            setInterval(() => {
+                window.globalTradeEmpire.saveToStorage();
+            }, 30000);
+            
+            // Show welcome message
+            setTimeout(() => {
+                console.log('🌟 النظام جاهز تماماً!');
+            }, 1000);
+        };
+    </script>
+
+</body>
+</html>
