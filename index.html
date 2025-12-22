@@ -1,18 +1,113 @@
-NovaTechFounder
-London HQ | London: 20:39:50
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaTechFounder | HQ</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-Global Balance
+    <style>
+        /* ضمان عدم ظهور شاشة بيضاء حتى قبل تحميل الصور */
+        body { background-color: #010409 !important; color: #c9d1d9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; }
+        .hq-card { border: 1px solid #30363d; background: #0d1117; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .money { color: #3fb950; font-family: monospace; font-size: 2.5rem; font-weight: bold; }
+        .log-container { background: #010409; border: 1px solid #30363d; height: 150px; overflow-y: auto; padding: 10px; font-size: 11px; font-family: monospace; color: #8b949e; }
+        .status-dot { height: 10px; width: 10px; background-color: #238636; border-radius: 50%; display: inline-block; margin-left: 5px; }
+    </style>
+</head>
+<body>
 
-$0
-🤖 جيش الروبوتات النشط (12 BOTS)
-> 11:39:31 م : Signal: +$0 from System Initialized
+    <header class="flex justify-between items-center border-b border-gray-800 pb-6 mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-white">NovaTechFounder</h1>
+            <p class="text-sm text-gray-500">London HQ | <span id="clock" class="text-blue-400">00:00:00</span></p>
+        </div>
+        <div class="text-left">
+            <p class="text-xs text-gray-500 uppercase">Global Balance</p>
+            <div id="total-balance" class="money">$0.00</div>
+        </div>
+    </header>
 
-> System Initialized...
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="hq-card">
+            <h2 class="text-lg font-bold mb-4 flex items-center">
+                <span class="status-dot"></span> جيش الروبوتات النشط (12 BOTS)
+            </h2>
+            <div id="bot-logs" class="log-container">
+                <p class="text-blue-400">> جاري فحص الاتصال بالخادم المركزي...</p>
+            </div>
+        </div>
 
-🏛️ مجلس الإدارة الذكي
-CEO Bot:
-Thinking...
-Finance Bot:
-Analyzing...
-Security Bot:
-Guarding...
+        <div class="hq-card">
+            <h2 class="text-lg font-bold mb-4 text-purple-400">🏛️ مجلس الإدارة الذكي</h2>
+            <div class="space-y-4">
+                <div class="flex justify-between border-b border-gray-800 pb-2">
+                    <span class="text-gray-400">CEO Bot:</span>
+                    <span class="text-green-500 font-bold">Thinking...</span>
+                </div>
+                <div class="flex justify-between border-b border-gray-800 pb-2">
+                    <span class="text-gray-400">Finance Bot:</span>
+                    <span class="text-yellow-500 font-bold">Analyzing Market...</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-400">Security Bot:</span>
+                    <span class="text-blue-500 font-bold">Guarding HQ...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. إعدادات Firebase الحقيقية الخاصة بك
+        const firebaseConfig = {
+            apiKey: "AIzaSyDhbqPOwAvgNQ3Qy0waQRLW_gD9UtnOn-s",
+            authDomain: "global-trade-empire-e0d34.firebaseapp.com",
+            projectId: "global-trade-empire-e0d34",
+            storageBucket: "global-trade-empire-e0d34.firebasestorage.app",
+            messagingSenderId: "458729027884",
+            appId: "1:458729027884:web:c5dde10eb0153062c6d489"
+        };
+
+        // 2. تفعيل Firebase مع معالجة الأخطاء
+        try {
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+            console.log("Firebase Connected Successfully");
+
+            // 3. مزامنة الأرباح اللحظية
+            db.collection("global_revenue").doc("status").onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('total-balance').innerText = `$${Number(data.total_amount).toLocaleString()}`;
+                    addLog(`إشارة مستلمة: +$${data.last_gain} من ${data.source}`);
+                } else {
+                    addLog("تنبيه: مستند البيانات غير موجود في Firestore");
+                }
+            }, (error) => {
+                addLog("خطأ في جلب البيانات: " + error.message);
+            });
+        } catch (e) {
+            console.error("Firebase Init Error:", e);
+        }
+
+        // 4. وظائف النظام
+        function addLog(msg) {
+            const logs = document.getElementById('bot-logs');
+            const time = new Date().toLocaleTimeString('ar-EG');
+            logs.innerHTML = `<p class="border-b border-gray-900 pb-1 mb-1">> ${time} : ${msg}</p>` + logs.innerHTML;
+        }
+
+        function updateClock() {
+            const options = { timeZone: "Europe/London", hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const lonTime = new Intl.DateTimeFormat('en-GB', options).format(new Date());
+            document.getElementById('clock').innerText = "London: " + lonTime;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock(); // تشغيل فوري
+    </script>
+</body>
+</html>
