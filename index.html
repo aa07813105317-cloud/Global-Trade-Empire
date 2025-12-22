@@ -1,108 +1,18 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOVATECH | Live Finance HQ</title>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body { background: #010409; font-family: 'Cairo', sans-serif; color: #c9d1d9; }
-        .orbitron { font-family: 'Orbitron', sans-serif; }
-        .money-glow { text-shadow: 0 0 10px rgba(35, 134, 54, 0.8); color: #3fb950; }
-        .hq-card { border: 1px solid #30363d; background: #0d1117; border-radius: 12px; }
-        .live-dot { height: 8px; width: 8px; background-color: #238636; border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
-    </style>
-</head>
-<body class="p-4 md:p-10">
+NovaTechFounder
+London HQ | London: 20:39:50
 
-    <header class="flex justify-between items-center mb-8 pb-4 border-b border-gray-800">
-        <div>
-            <h1 class="orbitron text-xl font-bold text-white">NOVATECH LIVE SYNC</h1>
-            <p class="text-xs text-gray-500">جاري الاتصال بمركز بيانات لندن... <span class="live-dot"></span></p>
-        </div>
-        <div class="text-left">
-            <p class="text-[10px] text-gray-500">محفظة الشركة الموحدة</p>
-            <p id="main-balance" class="orbitron text-2xl money-glow font-bold">$0.00</p>
-        </div>
-    </header>
+Global Balance
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 hq-card p-6">
-            <h2 class="text-lg font-bold mb-4 flex items-center gap-2">💹 تدفقات الأرباح المباشرة (Live Stream)</h2>
-            <div id="revenue-stream" class="space-y-3 h-64 overflow-y-auto">
-                <p class="text-gray-600 animate-pulse">بانتظار الإشارة الأولى من المنصات...</p>
-            </div>
-        </div>
+$0
+🤖 جيش الروبوتات النشط (12 BOTS)
+> 11:39:31 م : Signal: +$0 from System Initialized
 
-        <div class="hq-card p-6">
-            <h2 class="text-lg font-bold mb-4">🤖 حالة الجيش الميداني</h2>
-            <div id="bot-status-list" class="space-y-4">
-                </div>
-        </div>
-    </div>
+> System Initialized...
 
-    <script>
-        // 1. إعدادات Firebase (ضع بياناتك الحقيقية هنا)
-        const firebaseConfig = {
-            apiKey: "AIzaSy...", 
-            authDomain: "global-trade-empire.firebaseapp.com",
-            projectId: "global-trade-empire",
-            storageBucket: "global-trade-empire.appspot.com",
-            messagingSenderId: "YOUR_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // 2. وظيفة الاستماع المالي المباشر (The Real Link)
-        function startFinancialSync() {
-            // الاستماع لمجموعة الأرباح في Firebase
-            db.collection("global_revenue").doc("status").onSnapshot((doc) => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    document.getElementById('main-balance').innerText = `$${data.total_amount.toLocaleString()}`;
-                    addRevenueLog(`تم تحديث الرصيد من ${data.source}: +$${data.last_gain}`);
-                }
-            });
-        }
-
-        function addRevenueLog(msg) {
-            const stream = document.getElementById('revenue-stream');
-            const div = document.createElement('div');
-            div.className = "bg-white/5 p-3 rounded border-r-4 border-green-500 text-sm";
-            div.innerHTML = `<span class="text-gray-500 font-mono">[${new Date().toLocaleTimeString()}]</span> ${msg}`;
-            stream.prepend(div);
-        }
-
-        // 3. جيش الروبوتات
-        const bots = [
-            { name: "MaxBounty Sniper", task: "صيد العروض" },
-            { name: "Amazon Crawler", task: "مراقبة الأسعار" },
-            { name: "Global Recruiter", task: "جلب شركاء" }
-        ];
-
-        function loadBots() {
-            const list = document.getElementById('bot-status-list');
-            bots.forEach(bot => {
-                list.innerHTML += `
-                    <div class="flex justify-between items-center bg-white/5 p-2 rounded">
-                        <span class="text-xs font-bold">${bot.name}</span>
-                        <span class="text-[10px] text-green-400 bg-green-400/10 px-2 py-1 rounded">ON-DUTY</span>
-                    </div>
-                `;
-            });
-        }
-
-        window.onload = () => {
-            loadBots();
-            startFinancialSync();
-            console.log("إمبراطورية NOVATECH متصلة الآن بالمركز المالي.");
-        };
-    </script>
-</body>
-</html>
+🏛️ مجلس الإدارة الذكي
+CEO Bot:
+Thinking...
+Finance Bot:
+Analyzing...
+Security Bot:
+Guarding...
