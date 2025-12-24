@@ -1,113 +1,104 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaTechFounder | HQ</title>
-    
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <title>NOVATECH HQ | COMMANDER KADHIM JASIM</title>
     <style>
-        /* ضمان عدم ظهور شاشة بيضاء حتى قبل تحميل الصور */
-        body { background-color: #010409 !important; color: #c9d1d9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; }
-        .hq-card { border: 1px solid #30363d; background: #0d1117; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-        .money { color: #3fb950; font-family: monospace; font-size: 2.5rem; font-weight: bold; }
-        .log-container { background: #010409; border: 1px solid #30363d; height: 150px; overflow-y: auto; padding: 10px; font-size: 11px; font-family: monospace; color: #8b949e; }
-        .status-dot { height: 10px; width: 10px; background-color: #238636; border-radius: 50%; display: inline-block; margin-left: 5px; }
+        :root { --neon-green: #00ff41; --dark-bg: #050505; }
+        body { background-color: var(--dark-bg); color: var(--neon-green); font-family: 'Courier New', monospace; margin: 0; overflow: hidden; }
+        #matrix-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.15; }
+        .container { display: flex; flex-direction: column; height: 100vh; padding: 20px; box-sizing: border-box; border: 2px solid var(--neon-green); margin: 10px; position: relative; }
+        header { border-bottom: 2px solid var(--neon-green); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 2rem; letter-spacing: 5px; text-shadow: 0 0 10px var(--neon-green); }
+        .commander { color: white; background: rgba(0, 255, 65, 0.2); padding: 5px 15px; border-radius: 5px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 40px; }
+        .card { border: 1px solid var(--neon-green); padding: 20px; background: rgba(0, 10, 0, 0.8); text-align: center; box-shadow: inset 0 0 10px var(--neon-green); }
+        .big-number { font-size: 3rem; font-weight: bold; margin: 10px 0; }
+        .console { flex-grow: 1; border: 1px solid var(--neon-green); margin-top: 20px; background: black; padding: 15px; overflow: hidden; font-size: 0.9rem; position: relative; }
+        .log-entry { margin: 5px 0; animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+        .blink { animation: blink-anim 1s infinite; }
+        @keyframes blink-anim { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
 </head>
 <body>
+    <canvas id="matrix-bg"></canvas>
+    <div class="container">
+        <header>
+            <div class="logo">NOVATECH <span class="blink">HQ</span></div>
+            <div class="commander">COMMANDER: KADHIM JASIM</div>
+        </header>
 
-    <header class="flex justify-between items-center border-b border-gray-800 pb-6 mb-8">
-        <div>
-            <h1 class="text-2xl font-bold text-white">NovaTechFounder</h1>
-            <p class="text-sm text-gray-500">London HQ | <span id="clock" class="text-blue-400">00:00:00</span></p>
-        </div>
-        <div class="text-left">
-            <p class="text-xs text-gray-500 uppercase">Global Balance</p>
-            <div id="total-balance" class="money">$0.00</div>
-        </div>
-    </header>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="hq-card">
-            <h2 class="text-lg font-bold mb-4 flex items-center">
-                <span class="status-dot"></span> جيش الروبوتات النشط (12 BOTS)
-            </h2>
-            <div id="bot-logs" class="log-container">
-                <p class="text-blue-400">> جاري فحص الاتصال بالخادم المركزي...</p>
+        <div class="grid">
+            <div class="card">
+                <div>GLOBAL BOTS UNITS</div>
+                <div class="big-number" id="bot-count">5,420</div>
+                <div style="font-size: 0.8rem;">[STATUS: EVOLVING]</div>
+            </div>
+            <div class="card">
+                <div>LIVE REVENUE (USD)</div>
+                <div class="big-number" id="profit-count">$12,840.50</div>
+                <div style="font-size: 0.8rem;">[SCALING: ACTIVE]</div>
+            </div>
+            <div class="card">
+                <div>NEURAL UPTIME</div>
+                <div class="big-number" id="uptime">99.99%</div>
+                <div style="font-size: 0.8rem;">[SECURED BY NOVATECH AI]</div>
             </div>
         </div>
 
-        <div class="hq-card">
-            <h2 class="text-lg font-bold mb-4 text-purple-400">🏛️ مجلس الإدارة الذكي</h2>
-            <div class="space-y-4">
-                <div class="flex justify-between border-b border-gray-800 pb-2">
-                    <span class="text-gray-400">CEO Bot:</span>
-                    <span class="text-green-500 font-bold">Thinking...</span>
-                </div>
-                <div class="flex justify-between border-b border-gray-800 pb-2">
-                    <span class="text-gray-400">Finance Bot:</span>
-                    <span class="text-yellow-500 font-bold">Analyzing Market...</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-400">Security Bot:</span>
-                    <span class="text-blue-500 font-bold">Guarding HQ...</span>
-                </div>
-            </div>
+        <div class="console" id="console-logs">
+            <div class="log-entry">> Initializing NovaTech Neural Network...</div>
+            <div class="log-entry">> Connection established with London HQ...</div>
+            <div class="log-entry">> Welcome, Commander Kadhim. All systems operational.</div>
         </div>
     </div>
 
     <script>
-        // 1. إعدادات Firebase الحقيقية الخاصة بك
-        const firebaseConfig = {
-            apiKey: "AIzaSyDhbqPOwAvgNQ3Qy0waQRLW_gD9UtnOn-s",
-            authDomain: "global-trade-empire-e0d34.firebaseapp.com",
-            projectId: "global-trade-empire-e0d34",
-            storageBucket: "global-trade-empire-e0d34.firebasestorage.app",
-            messagingSenderId: "458729027884",
-            appId: "1:458729027884:web:c5dde10eb0153062c6d489"
-        };
+        // محاكاة الأرقام الحية
+        let bots = 5420;
+        let profit = 12840.50;
+        const logs = document.getElementById('console-logs');
 
-        // 2. تفعيل Firebase مع معالجة الأخطاء
-        try {
-            firebase.initializeApp(firebaseConfig);
-            const db = firebase.firestore();
-            console.log("Firebase Connected Successfully");
+        setInterval(() => {
+            bots += Math.floor(Math.random() * 3);
+            profit += Math.random() * 0.2;
+            document.getElementById('bot-count').innerText = bots.toLocaleString();
+            document.getElementById('profit-count').innerText = '$' + profit.toLocaleString(undefined, {minimumFractionDigits: 2});
+            
+            if(Math.random() > 0.7) {
+                const entry = document.createElement('div');
+                entry.className = 'log-entry';
+                entry.innerText = `> System Intelligence Update: Node ${Math.floor(Math.random()*9999)} Self-Optimized.`;
+                logs.prepend(entry);
+                if(logs.children.length > 8) logs.lastElementChild.remove();
+            }
+        }, 2000);
 
-            // 3. مزامنة الأرباح اللحظية
-            db.collection("global_revenue").doc("status").onSnapshot((doc) => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    document.getElementById('total-balance').innerText = `$${Number(data.total_amount).toLocaleString()}`;
-                    addLog(`إشارة مستلمة: +$${data.last_gain} من ${data.source}`);
-                } else {
-                    addLog("تنبيه: مستند البيانات غير موجود في Firestore");
-                }
-            }, (error) => {
-                addLog("خطأ في جلب البيانات: " + error.message);
-            });
-        } catch (e) {
-            console.error("Firebase Init Error:", e);
+        // خلفية الماتريكس (الشيفرة المتساقطة)
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const letters = "010101NOVATECHSYSTEMS";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#00ff41";
+            ctx.font = fontSize + "px arial";
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
         }
-
-        // 4. وظائف النظام
-        function addLog(msg) {
-            const logs = document.getElementById('bot-logs');
-            const time = new Date().toLocaleTimeString('ar-EG');
-            logs.innerHTML = `<p class="border-b border-gray-900 pb-1 mb-1">> ${time} : ${msg}</p>` + logs.innerHTML;
-        }
-
-        function updateClock() {
-            const options = { timeZone: "Europe/London", hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            const lonTime = new Intl.DateTimeFormat('en-GB', options).format(new Date());
-            document.getElementById('clock').innerText = "London: " + lonTime;
-        }
-        
-        setInterval(updateClock, 1000);
-        updateClock(); // تشغيل فوري
+        setInterval(draw, 33);
     </script>
 </body>
 </html>
