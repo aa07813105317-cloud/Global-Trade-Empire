@@ -1,132 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOVATECH | THE QUANTUM CORE</title>
+    <title>NovaTech HQ - مكافآت حصرية</title>
     <style>
-        :root { --neon-green: #00ff41; --neon-blue: #00d2ff; --neon-red: #ff003c; --dark-bg: #050505; }
-        body { background-color: var(--dark-bg); color: var(--neon-green); font-family: 'Courier New', monospace; margin: 0; overflow: hidden; }
-        #matrix-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.15; }
-        .container { display: flex; flex-direction: column; height: 100vh; padding: 20px; box-sizing: border-box; border: 2px solid var(--neon-green); margin: 10px; transition: all 0.5s ease; }
-        header { border-bottom: 2px solid var(--neon-green); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 2rem; letter-spacing: 5px; text-shadow: 0 0 10px var(--neon-green); cursor: pointer; }
-        .commander { color: white; background: rgba(0, 255, 65, 0.2); padding: 5px 15px; border-radius: 5px; cursor: pointer; border: 1px solid transparent; transition: 0.3s; }
-        .commander:hover { border-color: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); }
-        
-        /* شاشة الدخول السرية */
-        #admin-panel { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #000; border: 3px solid var(--neon-blue); padding: 40px; z-index: 1000; box-shadow: 0 0 50px var(--neon-blue); }
-        input { background: #111; border: 1px solid var(--neon-blue); color: var(--neon-blue); padding: 10px; margin: 10px 0; width: 100%; text-align: center; }
-        
-        /* غرفة العمليات الحمراء */
-        #war-room { display: none; padding: 20px; flex-grow: 1; border-top: 2px solid var(--neon-red); margin-top: 20px; color: var(--neon-red); }
-        .control-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
-        .weapon-card { border: 1px solid var(--neon-red); padding: 15px; background: rgba(50, 0, 0, 0.3); text-align: center; cursor: pointer; }
-        .weapon-card:hover { background: var(--neon-red); color: white; }
-        .btn-panic { background: var(--neon-red); color: white; border: none; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 20px; }
-
-        .big-number { font-size: 3rem; font-weight: bold; text-shadow: 0 0 10px currentColor; }
-        .console { flex-grow: 1; border: 1px solid var(--neon-green); margin-top: 20px; background: black; padding: 15px; overflow-y: auto; font-size: 0.8rem; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; text-align: center; color: #333; }
+        .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 40px 20px; }
+        .container { max-width: 800px; margin: 20px auto; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .offer-card { border: 2px dashed #2a5298; padding: 20px; border-radius: 10px; margin-top: 20px; }
+        h1 { margin: 0; font-size: 2.5rem; }
+        p { font-size: 1.2rem; color: #666; }
+        .btn { display: inline-block; padding: 15px 35px; background-color: #ff9800; color: white; text-decoration: none; font-weight: bold; border-radius: 50px; font-size: 1.3rem; transition: transform 0.3s; margin-top: 20px; }
+        .btn:hover { transform: scale(1.05); background-color: #e68a00; }
+        .footer { margin-top: 50px; font-size: 0.8rem; color: #999; }
     </style>
 </head>
 <body>
-    <canvas id="matrix-bg"></canvas>
 
-    <div id="admin-panel">
-        <h2 style="color: var(--neon-blue); margin-top: 0; text-align: center;">BIOMETRIC VERIFICATION</h2>
-        <input type="password" id="access-code" placeholder="COMMANDER ACCESS CODE">
-        <button style="width:100%; padding:10px; background:var(--neon-blue); border:none; cursor:pointer;" onclick="checkAccess()">UNLOCK TERMINAL</button>
-    </div>
+<div class="header">
+    <h1>NovaTech HQ</h1>
+    <p>بوابتك الرسمية للحصول على المكافآت الرقمية العالمية</p>
+</div>
 
-    <div class="container" id="main-frame">
-        <header id="main-header">
-            <div class="logo">NOVATECH <span style="font-size: 0.8rem; vertical-align: middle;">v2.0</span></div>
-            <div class="commander" onclick="showLogin()">COMMANDER: KADHIM JASIM</div>
-        </header>
-
-        <div id="public-view">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 40px;">
-                <div style="border: 1px solid var(--neon-green); padding: 20px; text-align: center;">
-                    <div>ACTIVE NEURAL NODES</div>
-                    <div class="big-number" id="bot-count">5,420</div>
-                </div>
-                <div style="border: 1px solid var(--neon-green); padding: 20px; text-align: center;">
-                    <div>SYSTEM REVENUE (EST)</div>
-                    <div class="big-number" id="profit-count">$12,840.50</div>
-                </div>
-            </div>
-            <div class="console" id="logs">
-                <div>> SYSTEM SECURE. MONITORING GLOBAL TRAFFIC...</div>
-            </div>
-        </div>
-
-        <div id="war-room">
-            <h2 style="margin: 0;">CONTROL ACTIVE: STRATEGIC OVERLAY</h2>
-            <div class="control-grid">
-                <div class="weapon-card" onclick="logAction('UK NODE OVERLOADED')">DEPLOY UK BOTS</div>
-                <div class="weapon-card" onclick="logAction('MAXBOUNTY LINK CLOAKED')">CLOAK CPA LINK</div>
-                <div class="weapon-card" onclick="logAction('AI SELF-EVOLUTION X2')">EVOLVE NEURAL CORE</div>
-                <div class="weapon-card" onclick="logAction('PROFIT MULTIPLIER ACTIVE')">BOOST REVENUE</div>
-            </div>
-            <div class="console" id="war-logs" style="border-color: var(--neon-red); height: 150px;">
-                <div>> COMMANDER LOGGED IN. WEAPON SYSTEMS READY.</div>
-            </div>
-            <button class="btn-panic" onclick="location.reload()">EXIT TERMINAL & CLOAK SYSTEM</button>
-        </div>
-
-        <footer style="text-align: center; font-size: 0.7rem; margin-top: 10px; opacity: 0.5;">
-            ENGINEERED BY GEMINI AI | POWERED BY NOVATECH HQ
-        </footer>
-    </div>
-
-    <script>
-        const accessCode = "2026";
-        function showLogin() { document.getElementById('admin-panel').style.display = 'block'; }
+<div class="container">
+    <h2>فرصة محدودة! 🎁</h2>
+    <p>لقد تم اختيارك للمشاركة في سحب الحصول على بطاقة <strong>Visa Gift Card بقيمة $1000</strong>.</p>
+    
+    <div class="offer-card">
+        <img src="https://via.placeholder.com/300x180.png?text=Visa+$1000+Card" alt="Visa Card" style="max-width: 100%; border-radius: 10px;">
+        <h3>بطاقة فيزا مشحونة مسبقاً</h3>
+        <p>صالحة للاستخدام في جميع أنحاء العالم للتسوق عبر الإنترنت.</p>
         
-        function checkAccess() {
-            if(document.getElementById('access-code').value === accessCode) {
-                document.getElementById('admin-panel').style.display = 'none';
-                document.getElementById('public-view').style.display = 'none';
-                document.getElementById('war-room').style.display = 'block';
-                document.getElementById('main-frame').style.borderColor = 'var(--neon-red)';
-                document.getElementById('main-header').style.borderColor = 'var(--neon-red)';
-                alert("ACCESS GRANTED. WELCOME, PARTNER.");
-            } else { alert("ACCESS DENIED. SECURITY PROTOCOL 9."); }
-        }
+        <a href="رابط_CPA_الخاص_بك_هنا" class="btn">احصل عليها الآن مجاناً</a>
+    </div>
+    
+    <p style="font-size: 0.9rem; color: #cc0000; margin-top: 15px;">* العرض متاح لـ 5 أشخاص فقط اليوم!</p>
+</div>
 
-        function logAction(action) {
-            const l = document.getElementById('war-logs');
-            l.innerHTML = `<div>> [ACTION]: ${action} ... SUCCESS</div>` + l.innerHTML;
-        }
+<div class="footer">
+    &copy; 2025 NovaTech HQ. جميع الحقوق محفوظة.
+</div>
 
-        // محرك الأرقام
-        let bots = 5420; let profit = 12840.50;
-        setInterval(() => {
-            bots += Math.floor(Math.random() * 5);
-            profit += Math.random() * 0.4;
-            document.getElementById('bot-count').innerText = bots.toLocaleString();
-            document.getElementById('profit-count').innerText = '$' + profit.toLocaleString(undefined, {minimumFractionDigits: 2});
-        }, 2000);
-
-        // خلفية الماتريكس
-        const canvas = document.getElementById('matrix-bg');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const letters = "010101NOVATECHGEMINI";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-        function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#00ff41"; ctx.font = fontSize + "px arial";
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters[Math.floor(Math.random() * letters.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            }
-        }
-        setInterval(draw, 33);
-    </script>
 </body>
 </html>
