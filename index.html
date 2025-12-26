@@ -3,43 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaTech HQ - مكافآت حصرية</title>
+    <title>إمبراطورية NovaTech HQ | النظام السيادي العالمي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; text-align: center; color: #333; }
-        .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 40px 20px; }
-        .container { max-width: 800px; margin: 20px auto; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .offer-card { border: 2px dashed #2a5298; padding: 20px; border-radius: 10px; margin-top: 20px; }
-        h1 { margin: 0; font-size: 2.5rem; }
-        p { font-size: 1.2rem; color: #666; }
-        .btn { display: inline-block; padding: 15px 35px; background-color: #ff9800; color: white; text-decoration: none; font-weight: bold; border-radius: 50px; font-size: 1.3rem; transition: transform 0.3s; margin-top: 20px; }
-        .btn:hover { transform: scale(1.05); background-color: #e68a00; }
-        .footer { margin-top: 50px; font-size: 0.8rem; color: #999; }
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@400;900&display=swap');
+        :root { --neon-blue: #00f3ff; --gold: #ffd700; }
+        body { background: #00020a; color: #fff; font-family: 'Cairo', sans-serif; }
+        .font-orbit { font-family: 'Orbitron', sans-serif; }
+        .glass-panel { background: rgba(2, 6, 23, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(0, 243, 255, 0.2); }
+        .robot-dot { width: 8px; height: 8px; border-radius: 50%; background: #1e293b; transition: 0.3s; }
+        .robot-active { background: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
+        .gold-text { background: linear-gradient(to right, #ffd700, #b8860b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>NovaTech HQ</h1>
-    <p>بوابتك الرسمية للحصول على المكافآت الرقمية العالمية</p>
-</div>
+    <nav class="glass-panel sticky top-0 z-50 p-4 border-b border-cyan-500/30">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl font-orbit font-black text-cyan-400">NOVATECH</span>
+                <span class="bg-cyan-500 text-black px-2 py-1 text-xs font-bold rounded">HQ</span>
+            </div>
+            <div class="hidden lg:flex gap-8 text-sm font-bold opacity-80">
+                <a href="#market" class="hover:text-cyan-400 transition">سوق الوكالات</a>
+                <a href="#trading" class="hover:text-cyan-400 transition">التداول الآلي</a>
+                <a href="#rewards" class="hover:text-cyan-400 transition">مركز المكافآت</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-left hidden md:block">
+                    <p class="text-[10px] text-gray-500">حالة الإمبراطورية</p>
+                    <p class="text-xs text-green-400 font-bold">● نظام التوالد نشط</p>
+                </div>
+                <button onclick="window.location.reload()" class="bg-cyan-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-cyan-400 transition">تحديث النظام</button>
+            </div>
+        </div>
+    </nav>
 
-<div class="container">
-    <h2>فرصة محدودة! 🎁</h2>
-    <p>لقد تم اختيارك للمشاركة في سحب الحصول على بطاقة <strong>Visa Gift Card بقيمة $1000</strong>.</p>
-    
-    <div class="offer-card">
-        <img src="https://via.placeholder.com/300x180.png?text=Visa+$1000+Card" alt="Visa Card" style="max-width: 100%; border-radius: 10px;">
-        <h3>بطاقة فيزا مشحونة مسبقاً</h3>
-        <p>صالحة للاستخدام في جميع أنحاء العالم للتسوق عبر الإنترنت.</p>
-        <a href="https://doctoredits.com/show.php?l=0&u=2481374&id=73793" class="btn">احصل عليها الآن مجاناً</a>
-    </div>
-    
-    <p style="font-size: 0.9rem; color: #cc0000; margin-top: 15px;">* العرض متاح لـ 5 أشخاص فقط اليوم!</p>
-</div>
+    <main class="container mx-auto p-4 lg:p-8">
+        <div class="text-center py-12 mb-12">
+            <h1 class="text-4xl lg:text-7xl font-orbit font-black mb-4 tracking-tighter uppercase">Global <span class="gold-text">Trade Empire</span></h1>
+            <p class="text-gray-400 max-w-2xl mx-auto italic">"نظام NovaTech: حيث يلتقي طموح القائد بذكاء الآلة لإدارة القارات الثلاث."</p>
+        </div>
 
-<div class="footer">
-    &copy; 2025 NovaTech HQ. جميع الحقوق محفوظة.
-</div>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            
+            <div class="glass-panel rounded-3xl p-6 lg:col-span-1">
+                <h2 class="text-xl font-bold mb-6 text-cyan-400"><i class="fas fa-microchip ml-2"></i> مجلس الإدارة</h2>
+                <div id="board-chat" class="space-y-4 text-xs h-[300px] overflow-hidden leading-relaxed">
+                    </div>
+                <div class="mt-6 pt-4 border-t border-gray-800">
+                    <p class="text-[10px] text-gray-500 mb-2 font-bold uppercase">القرار الاستراتيجي:</p>
+                    <div id="decision-box" class="p-3 bg-cyan-950/30 rounded-xl border border-cyan-500/20 text-xs text-cyan-100 italic">
+                        جاري تحليل البيانات...
+                    </div>
+                </div>
+            </div>
 
+            <div class="lg:col-span-2 space-y-6">
+                <div class="glass-panel rounded-3xl p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold">🤖 سرب الـ 100 ريبوت المستقل</h2>
+                        <span id="sync-status" class="text-[10px] bg-green-500/20 text-green-400 px-2 py-1 rounded">متزامن مع Binance</span>
+                    </div>
+                    <div id="swarm-grid" class="grid grid-cols-10 gap-3 mb-6">
+                        </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="bg-black/50 p-4 rounded-2xl border border-white/5 text-center">
+                            <p class="text-[10px] text-gray-500">أرباح التداول</p>
+                            <p id="live-trade" class="text-xl font-orbit font-bold text-green-400">$30.85</p>
+                        </div>
+                        <div class="bg-black/50 p-4 rounded-2xl border border-white/5 text-center">
+                            <p class="text-[10px] text-gray-500">تحويلات CPA</p>
+                            <p id="live-cpa" class="text-xl font-orbit font-bold text-blue-400">$0.00</p>
+                        </div>
+                        <div class="bg-black/50 p-4 rounded-2xl border border-white/5 text-center">
+                            <p class="text-[10px] text-gray-500">ذكاء التوالد</p>
+                            <p class="text-xl font-orbit font-bold text-purple-400">98%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="market" class="glass-panel rounded-3xl p-6">
+                    <h2 class="text-xl font-bold mb-4 text-gold"><i class="fas fa-globe-asia ml-2"></i> مركز الوكالات التجارية</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                            <h3 class="font-bold text-sm mb-1">توريد الصين - اليابان</h3>
+                            <p class="text-[10px] text-gray-400">ربط المصانع بأسواق العراق وأفريقيا.</p>
+                            <button class="mt-3 w-full py-2 bg-gray-800 text-xs rounded-lg">طلب شراكة</button>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                            <h3 class="font-bold text-sm mb-1">اللوجستيك الذكي</h3>
+                            <p class="text-[10px] text-gray-400">إدارة الشحنات والجمارك آلياً.</p>
+                            <button class="mt-3 w-full py-2 bg-gray-800 text-xs rounded-lg">تتبع الشحنة</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-6 lg:col-span-1">
+                <h2 id="rewards" class="text-xl font-bold mb-6"><i class="fas fa-wallet ml-2"></i> المحفظة والمكافآت</h2>
+                <div class="p-5 bg-gradient-to-br from-cyan-900/40 to-blue-900/40 rounded-2xl mb-6 text-center border border-cyan-500/30">
+                    <p class="text-xs text-cyan-300 mb-1 font-bold">إجمالي الرصيد الرقمي</p>
+                    <p id="total-wallet" class="text-3xl font-orbit font-black">$30.85</p>
+                </div>
+                <div class="space-y-4">
+                    <p class="text-xs font-bold text-gray-500 border-b border-gray-800 pb-2 uppercase">مكافآت الجمهور</p>
+                    <a href="رابط_عروضك_هنا" class="block p-4 glass-panel rounded-xl hover:border-cyan-400 transition group">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold">Visa Card $1000</span>
+                            <i class="fas fa-external-link-alt text-[10px] group-hover:text-cyan-400"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // NovaTech HQ Core Engine
+        const swarmGrid = document.getElementById('swarm-grid');
+        const boardChat = document.getElementById('board-chat');
+        const decisionBox = document.getElementById('decision-box');
+
+        // Initialize 100 Robots
+        for(let i=0; i<100; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'robot-dot';
+            dot.id = `robot-${i}`;
+            swarmGrid.appendChild(dot);
+        }
+
+        // Logic for Boardroom Intelligence
+        const boardVoices = [
+            { name: "المدير المالي", msg: "بوت تداول باينانس يرصد فرصة شراء على 88,200.", color: "text-green-400" },
+            { name: "مدير اللوجستيك", msg: "شحنة المصنع الصيني جاهزة للانطلاق إلى ميناء أم قصر.", color: "text-yellow-400" },
+            { name: "مدير التقنية", msg: "نظام التوالد أنشأ ريبوت رقم 101 لتحليل نقرات الجمهور.", color: "text-cyan-400" },
+            { name: "مركز القيادة", msg: "تم تحديث بروتوكول الأمان لعام 2025 بنجاح.", color: "text-purple-400" }
+        ];
+
+        const decisions = [
+            "زيادة الاستثمار في تداول الذهب...",
+            "تحويل حركة الزوار نحو عروض الفيزا الأمريكية...",
+            "مراسلة مصانع الطاقة المتجددة في اليابان...",
+            "تحسين معدل تحويل الأرباح العائمة..."
+        ];
+
+        function runSystem() {
+            // Update Boardroom Chat
+            const voice = boardVoices[Math.floor(Math.random() * boardVoices.length)];
+            const div = document.createElement('div');
+            div.innerHTML = `<span class="${voice.color} font-bold">[${voice.name}]:</span> ${voice.msg}`;
+            boardChat.prepend(div);
+            if(boardChat.children.length > 10) boardChat.removeChild(boardChat.lastChild);
+
+            // Update Decision
+            decisionBox.innerText = decisions[Math.floor(Math.random() * decisions.length)];
+
+            // Activate Random Robots (Visualizing the Swarm working)
+            for(let j=0; j<5; j++) {
+                const randomId = Math.floor(Math.random() * 100);
+                const bot = document.getElementById(`robot-${randomId}`);
+                bot.classList.add('robot-active');
+                setTimeout(() => bot.classList.remove('robot-active'), 1500);
+            }
+
+            // Simulate small profit growth
+            const currentTrade = parseFloat(document.getElementById('live-trade').innerText.replace('$', ''));
+            document.getElementById('live-trade').innerText = `$${(currentTrade + 0.01).toFixed(2)}`;
+            document.getElementById('total-wallet').innerText = `$${(currentTrade + 0.01).toFixed(2)}`;
+        }
+
+        setInterval(runSystem, 3500);
+    </script>
 </body>
 </html>
